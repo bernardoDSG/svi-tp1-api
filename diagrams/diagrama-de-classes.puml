@@ -1,0 +1,124 @@
+@startuml diagrama
+title Diagrama de Classes - Projeto site de venda de ingressos de cinema
+caption Aluno: Bernardo dos Santos Graça
+
+' --------------------
+' Classes principais
+' --------------------
+
+class Filme {
+    - idioma_original : String
+    - titulo : String
+    - duracao : String
+    - sinopse : String
+    - classificacaoIndicativa : String
+    - elenco : Ator
+    - atoresPrincipais : Ator
+}
+
+class IngressoMeia{
+    
+}
+
+enum Premio {
+    OSCAR 
+    GLOBODEOURO
+    PALMADEOURO
+    LEAODEOURO
+    URSODEOURO
+    BAFTA
+}
+
+enum Genero {
+    ACAO 
+    COMEDIA
+    DRAMA 
+    TERROR 
+    SUSPENSE 
+    FICCAO 
+    CIENTIFICO 
+    FANTASIA 
+    ROMANCE 
+    AVENTURA 
+    ANIMACAO
+}
+
+enum TipoDeMeia {
+    ESTUDANTE
+    IDOSO
+    PCD 
+    CRIANCA
+
+}
+
+class Ator {
+    - nome : String
+}
+
+class Sessao {
+    - ingressosEsgotado : Boolean
+    - horarioInicio : DateTime
+    - horarioFim : DateTime
+    
+}
+
+class Sala {
+    - nome : String
+}
+
+class Poltrona {
+    - nome : String
+    - estaOcupada : Boolean
+}
+
+class Ingresso {
+    - preco : Double
+    
+}
+class Idioma{
+    - nome : String
+    - sigla : String
+}
+
+' --------------------
+' Subclasses
+' --------------------
+
+class Sessao3d {
+    - taxa3d : Double
+}
+
+class SalaDeluxe {
+    - taxaDeluxe : Double
+}
+
+class IngressoPromocional {
+    - desconto : Double
+    - dataInicioPromocao : Date
+    - dataFimPromocao : Date
+}
+
+' --------------------
+' Herança
+' --------------------
+Sessao3d --|> Sessao
+SalaDeluxe --|> Sala
+IngressoPromocional --|> Ingresso
+IngressoMeia --|> Ingresso
+
+' --------------------
+' Relacionamentos
+' --------------------
+Filme "*" --> "*" Ator
+Filme "*" --> "*" Genero : genero
+Filme "*" --> "*" Premio : premiacao
+Ator "*" --> "*" Premio : premiacao
+Filme "*" --> "1" Idioma : idioma_original
+IngressoMeia "*" --> "1" TipoDeMeia : tipoDeMeia
+Ingresso "*" --> "1" Sessao
+Sessao "*" --> "*" Sala
+Sessao "*" --> "1" Idioma
+Sala "1" *--> "*" Poltrona
+Sessao "*" o--> "1" Filme
+
+@enduml
