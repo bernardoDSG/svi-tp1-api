@@ -8,6 +8,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import svi.converter.ConverterGeneroListString;
 import svi.converter.ConverterPremioString;
 
 @Entity
@@ -18,6 +19,7 @@ public class Filme extends DefaultEntity{
     private String classificacaoIndicativa;
     @Convert(converter = ConverterPremioString.class)
     private List<Premio> listaPremios;
+    @Convert(converter = ConverterGeneroListString.class)
     private List<Genero> listaGeneros;
     @ManyToMany
 @JoinTable(
