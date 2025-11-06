@@ -6,6 +6,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import svi.dto.AtorDTO;
+import svi.dto.AtorDTOResponse;
 import svi.model.Ator;
 import svi.repository.AtorRepository;
 
@@ -16,36 +17,49 @@ public class AtorServiceImpl implements AtorService{
 
     @Override
     @Transactional
-    public Ator create(AtorDTO dto) {
+    public AtorDTOResponse create(AtorDTO dto) {
         Ator ator = new Ator();
         ator.setNome(dto.nome());
         ator.setPremios(dto.premios());
 
         repository.persist(ator);
-        return ator;
+        return AtorDTOResponse.valueOf(ator);
     }
 
     @Override
     @Transactional
-    public void delete(long id) {
+    public void delete(Long id) {
         repository.deleteById(id);
         
     }
 
     @Override
-    public List<Ator> findAll() {
-        return repository.listAll();
+    public List<AtorDTOResponse> findAll() {
+        return repository.listAll()
+                         .stream()
+                         .map(m -> AtorDTOResponse.valueOf(m))
+                         .toList();
     }
 
     @Override
-    public Ator findById(Long id) {
-        return repository.findById(id);
+    public AtorDTOResponse findById(Long id) {
+        Ator ator = repository.findById(id);
+
+        if(ator == null) {
+            return null;
+        }
+
+        return AtorDTOResponse.valueOf(ator);
+
     }
 
     @Override
-    public List<Ator> findByNome(String nome) {
+    public List<AtorDTOResponse> findByNome(String nome) {
         
-        return repository.findByNome(nome);
+        return repository.findByNome(nome)
+                         .stream()
+                         .map(m -> AtorDTOResponse.valueOf(m))
+                         .toList();
     }
 
     @Override

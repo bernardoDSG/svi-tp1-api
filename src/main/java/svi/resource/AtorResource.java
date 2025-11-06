@@ -9,7 +9,8 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 import svi.dto.AtorDTO;
-import svi.model.Ator;
+import svi.dto.AtorDTOResponse;
+
 import svi.service.AtorService;
 @Path("/atores")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -20,19 +21,19 @@ public class AtorResource {
     AtorService service;
 
     @GET
-    public List<Ator> listarTodos() {
+    public List<AtorDTOResponse> listarTodos() {
         return service.findAll();
     }
 
     @GET
     @Path("/{id}")
-    public Ator buscarPorId(@PathParam("id") Long id) {
+    public AtorDTOResponse buscarPorId(@PathParam("id") Long id) {
         return service.findById(id);
     }
 
     @GET
     @Path("/buscar")
-    public List<Ator> buscarPorNome(@QueryParam("nome") String nome) {
+    public List<AtorDTOResponse> buscarPorNome(@QueryParam("nome") String nome) {
         return service.findByNome(nome);
     }
 
