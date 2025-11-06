@@ -6,6 +6,8 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 import svi.dto.AtorDTO;
 import svi.model.Ator;
 import svi.service.AtorService;
@@ -34,11 +36,9 @@ public class AtorResource {
         return service.findByNome(nome);
     }
 
-    @POST
-    @Transactional
-    public Ator criar(AtorDTO dto) {
-        return service.create(dto);
-    }
+   @POST 
+   public Response incluir(AtorDTO dto) {
+        return Response.status(Status.CREATED).entity(service.create(dto)).build(); }
 
     @PUT
     @Path("/{id}")
