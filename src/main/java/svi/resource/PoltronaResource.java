@@ -1,5 +1,6 @@
 package svi.resource;
-
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 import java.util.List;
 
 import jakarta.inject.Inject;
@@ -7,7 +8,8 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import svi.dto.PoltronaDTO;
-import svi.model.Poltrona;
+import svi.dto.PoltronaDTOResponse;
+
 import svi.service.PoltronaService;
 
 @Path("/poltronas")
@@ -19,32 +21,32 @@ public class PoltronaResource {
     PoltronaService service;
 
     @GET
-    public List<Poltrona> listarTodos() {
+    public List<PoltronaDTOResponse> listarTodos() {
         return service.findAll();
     }
 
     @GET
     @Path("/{id}")
-    public Poltrona buscarPorId(@PathParam("id") Long id) {
+    public PoltronaDTOResponse buscarPorId(@PathParam("id") Long id) {
         return service.findById(id);
     }
 
     @GET
     @Path("/buscar")
-    public List<Poltrona> buscarPorNome(@QueryParam("nome") String nome) {
+    public List<PoltronaDTOResponse> buscarPorNome(@QueryParam("nome") String nome) {
         return service.findByNome(nome);
     }
 
     @GET
     @Path("/disponibilidade")
-    public List<Poltrona> buscarPorDisponibilidade(@QueryParam("ocupada") Boolean ocupada) {
-        return service.findByDisponibilidade(ocupada);
+    public List<PoltronaDTOResponse> buscarPorDisponibilidade(@QueryParam("estaOcupada") Boolean estaOcupada) {
+        return service.findByDisponibilidade(estaOcupada);
     }
 
     @POST
     @Transactional
-    public Poltrona criar(PoltronaDTO dto) {
-        return service.create(dto);
+    public Response criar(PoltronaDTO dto) {
+        return Response.status(Status.CREATED).entity(service.create(dto)).build();
     }
 
     @PUT

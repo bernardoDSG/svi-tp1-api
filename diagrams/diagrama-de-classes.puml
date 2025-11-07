@@ -84,26 +84,14 @@ class Idioma{
 ' Subclasses
 ' --------------------
 
-class Sessao3d {
-    - taxa3d : Double
-}
 
-class SalaDeluxe {
-    - taxaDeluxe : Double
-}
 
-class IngressoPromocional {
-    - desconto : Double
-    - dataInicioPromocao : Date
-    - dataFimPromocao : Date
-}
+
 
 ' --------------------
 ' Herança
 ' --------------------
-Sessao3d --|> Sessao
-SalaDeluxe --|> Sala
-IngressoPromocional --|> Ingresso
+
 IngressoMeia --|> Ingresso
 
 ' --------------------

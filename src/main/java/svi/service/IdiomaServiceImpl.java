@@ -6,6 +6,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import svi.dto.IdiomaDTO;
+import svi.dto.IdiomaDTOResponse;
 import svi.model.Idioma;
 import svi.repository.IdiomaRepository;
 
@@ -16,14 +17,14 @@ public class IdiomaServiceImpl implements IdiomaService{
 
     @Override
     @Transactional
-    public Idioma create(IdiomaDTO dto) {
+    public IdiomaDTOResponse create(IdiomaDTO dto) {
         Idioma idioma = new Idioma();
         idioma.setNome(dto.nome());
         idioma.setSigla(dto.sigla());
 
         repository.persist(idioma);
 
-        return idioma;
+        return IdiomaDTOResponse.valueOf(idioma);
     }
 
     @Override
@@ -34,26 +35,39 @@ public class IdiomaServiceImpl implements IdiomaService{
     }
 
     @Override
-    public List<Idioma> findAll() {
-        return repository.listAll();
+    public List<IdiomaDTOResponse> findAll() {
+        return repository.listAll()
+                         .stream()
+                         .map(m -> IdiomaDTOResponse.valueOf(m))
+                         .toList();
     }
 
     @Override
-    public Idioma findById(Long id) {
+    public IdiomaDTOResponse findById(Long id) {
         
-        return repository.findById(id);
+        Idioma idioma = repository.findById(id);
+        if(idioma == null) {
+            return null;
+        }
+        return IdiomaDTOResponse.valueOf(idioma);
     }
 
     @Override
-    public List<Idioma> findByNome(String nome) {
+    public List<IdiomaDTOResponse> findByNome(String nome) {
         
-        return repository.findByNome(nome);
+        return repository.findByNome(nome)
+                         .stream()
+                         .map(m -> IdiomaDTOResponse.valueOf(m))
+                         .toList();
     }
 
     @Override
-    public List<Idioma> findBySigla(String sigla) {
+    public List<IdiomaDTOResponse> findBySigla(String sigla) {
         
-        return repository.findBySigla(sigla);
+        return repository.findBySigla(sigla)
+                         .stream()
+                         .map(m -> IdiomaDTOResponse.valueOf(m))
+                         .toList();
     }
 
     @Override

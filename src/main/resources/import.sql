@@ -13,9 +13,9 @@ values ('Era uma Vez em Hollywood', '2h40m','um filme sobre as aventuras em Holl
 ,'16 anos','Oscar,Globo de Ouro','Ação,Comédia',2);
 insert into filme_atores_principais (filme_id,ator_id) values (1,1);
 insert into filme_atores_principais (filme_id,ator_id) values (1,2);
-insert into Sala(dtype,nome) values ('Sala','Sala 1');
+insert into Sala(nome) values ('Sala 1');
 insert into Poltrona(nome,estaOcupada,sala_id) values ('A1',false,1);
 insert into Poltrona(nome,estaOcupada,sala_id) values ('A2',true,1);
-insert into Sessao(dtype,ingressosEsgotado,horarioInicio,horarioFim,idioma_id,filme_id) 
-values('Sessao',false,'2025-04-10T20:30:00','2025-04-10T23:10:00',2,1);
+insert into Sessao(ingressosEsgotado,horarioInicio,horarioFim,idioma_id,filme_id) 
+values(false,'2025-04-10T20:30:00','2025-04-10T23:10:00',2,1);
 insert into sessao_sala (sessao_id,sala_id) values (1,1);

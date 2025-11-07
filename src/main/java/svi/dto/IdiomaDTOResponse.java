@@ -9,6 +9,8 @@ public record IdiomaDTOResponse(
 ) {
 
     public static IdiomaDTOResponse valueOf(Idioma idioma) {
-        return new IdiomaDTOResponse(idioma.getId(),idioma.getNome(), idioma.getSigla());
+        return new IdiomaDTOResponse(idioma.getId()
+                                    ,idioma.getNome()
+                                    , idioma.getSigla());
     }
 }

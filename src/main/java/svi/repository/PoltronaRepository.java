@@ -13,7 +13,7 @@ public class PoltronaRepository implements PanacheRepository<Poltrona>{
     }
 
     public List<Poltrona> findByDisponibilidade(Boolean estaOcupada) {
-        return find("SELECT p FROM Poltrona p  WHERE p.estaOcupada LIKE ?1 " , "%" +estaOcupada+"%").list();
+        return find("SELECT p FROM Poltrona p  WHERE p.estaOcupada = ?1 " ,estaOcupada).list();
     }
 }
 
