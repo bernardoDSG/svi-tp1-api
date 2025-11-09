@@ -1,9 +1,15 @@
 package svi.dto;
 
-import java.util.List;
+import svi.converter.ConverterPremioString;
+import svi.model.Ator;
 
-import svi.model.Premio;
+public record AtorDTO(String nome,String premios) {
 
-public record AtorDTO(String nome,List<Premio> premios) {
-
+    public static Ator fromDTO (AtorDTO dto) {
+        ConverterPremioString converterPS = new ConverterPremioString();
+        Ator ator = new Ator();
+        ator.setNome(dto.nome());
+        ator.setPremios(converterPS.convertToEntityAttribute(dto.premios()));
+        return ator;
+    }
 }

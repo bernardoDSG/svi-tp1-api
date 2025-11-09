@@ -5,6 +5,7 @@ import java.util.List;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import svi.converter.ConverterPremioString;
 import svi.dto.AtorDTO;
 import svi.dto.AtorDTOResponse;
 import svi.model.Ator;
@@ -14,13 +15,14 @@ import svi.repository.AtorRepository;
 public class AtorServiceImpl implements AtorService{
     @Inject
     AtorRepository repository;
-
+    ConverterPremioString converterPS = new ConverterPremioString();
     @Override
     @Transactional
     public AtorDTOResponse create(AtorDTO dto) {
+       
         Ator ator = new Ator();
         ator.setNome(dto.nome());
-        ator.setPremios(dto.premios());
+        ator.setPremios(converterPS.convertToEntityAttribute(dto.premios()));
 
         repository.persist(ator);
         return AtorDTOResponse.valueOf(ator);
@@ -67,7 +69,7 @@ public class AtorServiceImpl implements AtorService{
     public void update(Long id, AtorDTO dto) {
         Ator ator = repository.findById(id);
         ator.setNome(dto.nome());
-        ator.setPremios(dto.premios());
+        ator.setPremios(converterPS.convertToEntityAttribute(dto.premios()));
         
     }
 

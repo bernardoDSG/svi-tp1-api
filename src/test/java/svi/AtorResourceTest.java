@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
-import java.util.List;
+
 
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
@@ -18,13 +18,13 @@ import svi.converter.ConverterPremioString;
 import svi.dto.AtorDTO;
 import svi.dto.AtorDTOResponse;
 
-import svi.model.Premio;
+
 import svi.service.AtorService;
 
 
 @QuarkusTest
 public class AtorResourceTest {
-    
+    ConverterPremioString converter = new ConverterPremioString();
     @Inject
     AtorService atorservice;
 
@@ -61,10 +61,10 @@ public class AtorResourceTest {
 
     @Test
     void incluirTest() {
-        ConverterPremioString converter = new ConverterPremioString();
-        List<Premio> premios = converter.convertToEntityAttribute("Oscar,Globo de Ouro,British Academy Film Awards");
         
-        AtorDTO dto = new AtorDTO("Christian Bale",premios);  
+        
+        
+        AtorDTO dto = new AtorDTO("Christian Bale","Oscar,Globo de Ouro,British Academy Film Awards");  
         
         RestAssured.given()
                 .contentType(ContentType.JSON)
@@ -81,12 +81,12 @@ public class AtorResourceTest {
 
     @Test
     void alterarTest() {
-        ConverterPremioString converter = new ConverterPremioString();
-        List<Premio> premios = converter.convertToEntityAttribute("Oscar,British Academy Film Awards");
-        AtorDTO dto = new AtorDTO("Robert Downey Jr",premios);
+        
+        
+        AtorDTO dto = new AtorDTO("Robert Downey Jr","Oscar,British Academy Film Awards");
         AtorDTOResponse response = atorservice.create(dto);
-        premios = converter.convertToEntityAttribute("Oscar,Globo de Ouro");
-        AtorDTO dtoUpdate = new AtorDTO("Robert Downey Jr", premios);
+        
+        AtorDTO dtoUpdate = new AtorDTO("Robert Downey Jr", "Oscar,Globo de Ouro");
         RestAssured.given()
                 .contentType(ContentType.JSON)
                 .body(dtoUpdate)
@@ -104,9 +104,9 @@ public class AtorResourceTest {
 
     @Test
     void apagarTest() {
-        ConverterPremioString converter = new ConverterPremioString();
-        List<Premio> premios = converter.convertToEntityAttribute("Oscar,Leão de Ouro(Festival de Veneza)");
-        AtorDTO dto = new AtorDTO("Cilian Murphy", premios);
+        
+        
+        AtorDTO dto = new AtorDTO("Cilian Murphy", "Oscar,Leão de Ouro(Festival de Veneza)");
 
         AtorDTOResponse response = atorservice.create(dto);
 

@@ -7,7 +7,8 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import svi.dto.FilmeDTO;
-import svi.model.Filme;
+import svi.dto.FilmeDTOResponse;
+
 import svi.service.FilmeService;
 
 @Path("/filmes")
@@ -19,31 +20,31 @@ public class FilmeResource {
     FilmeService service;
 
     @GET
-    public List<Filme> listarTodos() {
+    public List<FilmeDTOResponse> listarTodos() {
         return service.findAll();
     }
 
     @GET
     @Path("/{id}")
-    public Filme buscarPorId(@PathParam("id") Long id) {
+    public FilmeDTOResponse buscarPorId(@PathParam("id") Long id) {
         return service.findById(id);
     }
 
     @GET
     @Path("/buscar")
-    public List<Filme> buscarPorTitulo(@QueryParam("titulo") String titulo) {
+    public List<FilmeDTOResponse> buscarPorTitulo(@QueryParam("titulo") String titulo) {
         return service.findByTitulo(titulo);
     }
 
     @GET
     @Path("/classificacao")
-    public List<Filme> buscarPorClassificacao(@QueryParam("valor") String classificacao) {
+    public List<FilmeDTOResponse> buscarPorClassificacao(@QueryParam("valor") String classificacao) {
         return service.findByClassificacaoIndicativa(classificacao);
     }
 
     @POST
     @Transactional
-    public Filme criar(FilmeDTO dto) {
+    public FilmeDTOResponse criar(FilmeDTO dto) {
         return service.create(dto);
     }
 

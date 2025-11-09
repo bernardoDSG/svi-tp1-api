@@ -32,6 +32,10 @@ public class Filme extends DefaultEntity{
     @JoinColumn(name = "idioma_id")
     private Idioma idioma_original; 
 
+
+
+
+    
     public List<Premio> getListaPremios() {
         return listaPremios;
     }
