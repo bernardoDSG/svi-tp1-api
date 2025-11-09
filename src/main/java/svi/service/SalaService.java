@@ -3,13 +3,14 @@ package svi.service;
 import java.util.List;
 
 import svi.dto.SalaDTO;
-import svi.model.Sala;
+import svi.dto.SalaDTOResponse;
+
 
 public interface SalaService {
-    List<Sala> findAll();
-    List<Sala> findByNome(String nome);
-    Sala findById(Long id);
-    Sala create(SalaDTO dto);
+    List<SalaDTOResponse> findAll();
+    List<SalaDTOResponse> findByNome(String nome);
+    SalaDTOResponse findById(Long id);
+    SalaDTOResponse create(SalaDTO dto);
     void update(Long id, SalaDTO dto);
     void delete (Long id);
 }

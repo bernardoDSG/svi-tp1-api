@@ -2,16 +2,23 @@ package svi.dto;
 
 import java.util.List;
 
-import svi.model.Poltrona;
 import svi.model.Sala;
 
 public record SalaDTOResponse(
     Long id,
     String nome,
-    List<Poltrona> listaPoltrona
+    List<PoltronaDTOResponse> listaPoltrona
 ) {
 public static SalaDTOResponse valueOf(Sala sala) {
-    return new SalaDTOResponse(sala.getId(), sala.getNome(), sala.getListaPoltrona());
+    if(sala == null) {
+        return null;
+    }
+    List<PoltronaDTOResponse> dtoResponses = sala.getListaPoltrona().stream()
+                                                                    .map(p -> PoltronaDTOResponse.valueOf(p))
+                                                                    .toList();
+    return new SalaDTOResponse(sala.getId(), sala.getNome(), dtoResponses);
+                                                     
+                                                     
 }
 
 }

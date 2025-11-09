@@ -5,7 +5,10 @@ import java.util.List;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import svi.dto.PoltronaDTO;
 import svi.dto.SalaDTO;
+import svi.dto.SalaDTOResponse;
+import svi.model.Poltrona;
 import svi.model.Sala;
 import svi.repository.SalaRepository;
 
@@ -16,18 +19,18 @@ public class SalaServiceImpl implements SalaService {
 
     @Override
     @Transactional 
-    public Sala create(SalaDTO dto) {
+    public SalaDTOResponse create(SalaDTO dto) {
     Sala sala = new Sala();
     sala.setNome(dto.nome());
-
-
-    if (dto.listaPoltronas() != null) {
-        dto.listaPoltronas().forEach(poltrona -> poltrona.setSala(sala));
-        sala.setListaPoltrona(dto.listaPoltronas());
-    }
-
+    if(dto.poltronas() != null && dto.poltronas().isEmpty() == false) {
+        List<Poltrona> listaPoltrona = dto.poltronas()
+                                                .stream()
+                                                .map(p ->PoltronaDTO.fromDTO(p))
+                                                .toList();
+        sala.setListaPoltrona(listaPoltrona); 
+    } 
     repository.persist(sala);
-    return sala;
+    return SalaDTOResponse.valueOf(sala);
 }
 
     @Override
@@ -38,31 +41,37 @@ public class SalaServiceImpl implements SalaService {
     }
 
     @Override
-    public List<Sala> findAll() {
+    public List<SalaDTOResponse> findAll() {
         
-        return repository.listAll();
+        return repository.listAll().stream()
+                                   .map(s -> SalaDTOResponse.valueOf(s))
+                                   .toList();
     }
 
     @Override
-    public Sala findById(Long id) {
+    public SalaDTOResponse findById(Long id) {
         
-        return repository.findById(id);
+        return SalaDTOResponse.valueOf(repository.findById(id));
     }
 
     @Override
-    public List<Sala> findByNome(String nome) {
+    public List<SalaDTOResponse> findByNome(String nome) {
         
-        return repository.findByNome(nome);
+        return repository.findByNome(nome).stream()
+                                          .map(s -> SalaDTOResponse.valueOf(s))
+                                          .toList();
     }
 @Override
 @Transactional 
 public void update(Long id, SalaDTO dto) {
     Sala sala = repository.findById(id);
     sala.setNome(dto.nome());
-
-    if (dto.listaPoltronas() != null) {
-        dto.listaPoltronas().forEach(poltrona -> poltrona.setSala(sala));
-        sala.setListaPoltrona(dto.listaPoltronas());
+    if(dto.poltronas() != null && dto.poltronas().isEmpty() == false) {
+        sala.getListaPoltrona().clear();
+        dto.poltronas().stream()
+                       .map(p -> PoltronaDTO.fromDTO(p))
+                       .forEach(p -> sala.getListaPoltrona().add(p));
+                       
     }
 }
 

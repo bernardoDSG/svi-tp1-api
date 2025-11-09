@@ -6,8 +6,11 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 import svi.dto.SalaDTO;
-import svi.model.Sala;
+import svi.dto.SalaDTOResponse;
+
 import svi.service.SalaService;
 
 @Path("/salas")
@@ -19,26 +22,26 @@ public class SalaResource {
     SalaService service;
 
     @GET
-    public List<Sala> listarTodos() {
+    public List<SalaDTOResponse> listarTodos() {
         return service.findAll();
     }
 
     @GET
     @Path("/{id}")
-    public Sala buscarPorId(@PathParam("id") Long id) {
+    public SalaDTOResponse buscarPorId(@PathParam("id") Long id) {
         return service.findById(id);
     }
 
     @GET
     @Path("/buscar")
-    public List<Sala> buscarPorNome(@QueryParam("nome") String nome) {
+    public List<SalaDTOResponse> buscarPorNome(@QueryParam("nome") String nome) {
         return service.findByNome(nome);
     }
 
     @POST
     @Transactional
-    public Sala criar(SalaDTO dto) {
-        return service.create(dto);
+    public Response criar(SalaDTO dto) {
+        return Response.status(Status.CREATED).entity(service.create(dto)).build();
     }
 
     @PUT

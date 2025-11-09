@@ -2,18 +2,19 @@ package svi.model;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 
 @Entity
 public class Sala extends DefaultEntity{
     private String nome;
 
-    @OneToMany(mappedBy = "sala" , cascade = CascadeType.ALL,orphanRemoval = true)
-    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "sala_id") 
     private List<Poltrona> listaPoltrona;
 
     public String getNome() {
