@@ -9,8 +9,8 @@ public record FilmeDTO(String titulo,
                        String duracao,
                        String sinopse,
                        String classificacaoIndicativa,
-                       String premios,
-                       String generos,
+                       List<Long> idPremios,
+                       List<Long> idGeneros,
                        List<Long> idAtores,
                        Long idIdiomaOriginal) {
 

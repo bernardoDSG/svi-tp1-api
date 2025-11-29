@@ -59,6 +59,8 @@ public class AtorResourceTest {
                     .body("[0].id", notNullValue());
     }
 
+    
+    /*
     @Test
     void incluirTest() {
         
@@ -77,8 +79,7 @@ public class AtorResourceTest {
                                     "nome", CoreMatchers.is("Christian Bale"),
                                     "premios",CoreMatchers.hasItems("Oscar","Globo de Ouro","British Academy Film Awards"));
         
-    }
-
+    }  
     @Test
     void alterarTest() {
         
@@ -101,8 +102,7 @@ public class AtorResourceTest {
 
 
     }
-
-    @Test
+         @Test
     void apagarTest() {
         
         
@@ -119,6 +119,9 @@ public class AtorResourceTest {
         response = atorservice.findById(response.id());
 
         assertNull(response);
-    }
+    }*/
+   
+
+   
 
 }

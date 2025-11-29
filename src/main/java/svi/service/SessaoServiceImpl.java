@@ -26,11 +26,13 @@ public class SessaoServiceImpl implements SessaoService {
     IdiomaRepository idiomaRepository;
 
     @Override
+    @Transactional
     public List<Sessao> findAll() {
         return repository.listAll();
     }
 
     @Override
+    @Transactional
     public Sessao findById(Long id) {
         return repository.findById(id);
     }
@@ -41,7 +43,6 @@ public class SessaoServiceImpl implements SessaoService {
         Sessao sessao = new Sessao();
         sessao.setHorarioInicio(dto.horarioInicio());
         sessao.setHorarioFim(dto.horarioFim());
-        sessao.setIngressosEsgotado(dto.ingressoEsgotado());
         sessao.setFilme(filmeRepository.findById(dto.idFilme()));
         sessao.setIdioma(idiomaRepository.findById(dto.idIdioma()));
 
@@ -61,7 +62,6 @@ public class SessaoServiceImpl implements SessaoService {
         Sessao sessao = repository.findById(id);
         sessao.setHorarioInicio(dto.horarioInicio());
         sessao.setHorarioFim(dto.horarioFim());
-        sessao.setIngressosEsgotado(dto.ingressoEsgotado());
         sessao.setFilme(filmeRepository.findById(dto.idFilme()));
         sessao.setIdioma(idiomaRepository.findById(dto.idIdioma()));
 

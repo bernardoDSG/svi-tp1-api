@@ -2,10 +2,12 @@ package svi.service;
 
 import java.util.Arrays;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import svi.converter.ConverterTipoDeMeiaString;
 
 import svi.model.TipodeMeia;
 
+@ApplicationScoped
 public class TipoDeMeiaServiceImpl implements TipoDeMeiaService {
 
     @Override

@@ -41,6 +41,7 @@ public class SalaServiceImpl implements SalaService {
     }
 
     @Override
+    @Transactional
     public List<SalaDTOResponse> findAll() {
         
         return repository.listAll().stream()
@@ -49,12 +50,14 @@ public class SalaServiceImpl implements SalaService {
     }
 
     @Override
+    @Transactional
     public SalaDTOResponse findById(Long id) {
         
         return SalaDTOResponse.valueOf(repository.findById(id));
     }
 
     @Override
+    @Transactional
     public List<SalaDTOResponse> findByNome(String nome) {
         
         return repository.findByNome(nome).stream()

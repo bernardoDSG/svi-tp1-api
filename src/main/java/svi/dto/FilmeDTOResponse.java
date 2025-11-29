@@ -8,6 +8,7 @@ import svi.model.Filme;
 
 
 public record FilmeDTOResponse(
+    Long id,
     String titulo,
     String duracao,
     String sinopse,
@@ -21,6 +22,7 @@ public record FilmeDTOResponse(
         ConverterPremioString converterPS = new ConverterPremioString();
         ConverterGeneroListString converterGS = new ConverterGeneroListString();
         return new FilmeDTOResponse(
+            filme.getId(),
             filme.getTitulo(),
             filme.getDuracao(),
             filme.getSinopse(),

@@ -35,6 +35,7 @@ public class IdiomaServiceImpl implements IdiomaService{
     }
 
     @Override
+    @Transactional
     public List<IdiomaDTOResponse> findAll() {
         return repository.listAll()
                          .stream()
@@ -43,6 +44,7 @@ public class IdiomaServiceImpl implements IdiomaService{
     }
 
     @Override
+    @Transactional
     public IdiomaDTOResponse findById(Long id) {
         
         Idioma idioma = repository.findById(id);
@@ -53,6 +55,7 @@ public class IdiomaServiceImpl implements IdiomaService{
     }
 
     @Override
+    @Transactional
     public List<IdiomaDTOResponse> findByNome(String nome) {
         
         return repository.findByNome(nome)
@@ -62,6 +65,7 @@ public class IdiomaServiceImpl implements IdiomaService{
     }
 
     @Override
+    @Transactional
     public List<IdiomaDTOResponse> findBySigla(String sigla) {
         
         return repository.findBySigla(sigla)

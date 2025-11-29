@@ -1,15 +1,18 @@
 package svi.dto;
 
-import svi.converter.ConverterPremioString;
+import java.util.List;
+
+import svi.converter.ConverterIdObjeto;
+
 import svi.model.Ator;
 
-public record AtorDTO(String nome,String premios) {
+public record AtorDTO(String nome,List<Long> idPremios) {
 
     public static Ator fromDTO (AtorDTO dto) {
-        ConverterPremioString converterPS = new ConverterPremioString();
+        ConverterIdObjeto converterId = new ConverterIdObjeto();
         Ator ator = new Ator();
         ator.setNome(dto.nome());
-        ator.setPremios(converterPS.convertToEntityAttribute(dto.premios()));
+        ator.setPremios( dto.idPremios().stream().map(i ->converterId.premioFromId(i)).toList());
         return ator;
     }
 }

@@ -6,19 +6,26 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import svi.converter.ConverterGeneroListString;
+import svi.converter.ConverterIdObjeto;
 import svi.converter.ConverterPremioString;
-import svi.dto.AtorDTO;
+
 import svi.dto.FilmeDTO;
 import svi.dto.FilmeDTOResponse;
-import svi.dto.IdiomaDTO;
+
 import svi.model.Filme;
-import svi.model.Idioma;
+
+import svi.repository.AtorRepository;
 import svi.repository.FilmeRepository;
 import svi.repository.IdiomaRepository;
 
 
 @ApplicationScoped
 public class FilmeServiceImpl implements FilmeService{
+    @Inject
+    AtorRepository atorRepository;
+
+    @Inject
+    IdiomaRepository idiomaRepository;
 
     @Inject
     FilmeRepository repository;
@@ -32,17 +39,16 @@ public class FilmeServiceImpl implements FilmeService{
     @Override
     @Transactional
     public FilmeDTOResponse create(FilmeDTO dto) {
-        
+        ConverterIdObjeto converterId = new ConverterIdObjeto();
         Filme filme = new Filme();
         filme.setTitulo(dto.titulo());
         filme.setDuracao(dto.duracao());
         filme.setSinopse(dto.sinopse());
         filme.setClassificacaoIndicativa(dto.classificacaoIndicativa());
-        filme.setListaPremios(converterPS.convertToEntityAttribute(dto.premios()));
-        filme.setListaGeneros(converterGS.convertToEntityAttribute(dto.generos()));
-        filme.setListaAtores(dto.Atores().stream().map(a -> AtorDTO.fromDTO(a)).toList());
-        Idioma idioma_original = IdiomaDTO.fromDTO(dto.idioma_original());
-        filme.setIdioma_original(idioma_original);
+        filme.setListaPremios(dto.idPremios().stream().map(i -> converterId.premioFromId(i)).toList());
+        filme.setListaGeneros(dto.idGeneros().stream().map(i-> converterId.generoFromId(i)).toList());
+        filme.setListaAtores(dto.idAtores().stream().map(i -> atorRepository.findById(i)).toList());
+        filme.setIdioma_original(idiomaRepository.findById(dto.idIdiomaOriginal()));
         
         repository.persist(filme);
         return FilmeDTOResponse.valueOf(filme);
@@ -56,6 +62,7 @@ public class FilmeServiceImpl implements FilmeService{
     }
 
     @Override
+    @Transactional
     public List<FilmeDTOResponse> findAll() {
         
         return repository.listAll().stream()
@@ -64,6 +71,7 @@ public class FilmeServiceImpl implements FilmeService{
     }
 
     @Override
+    @Transactional
     public List<FilmeDTOResponse> findByClassificacaoIndicativa(String classificacaoIndicativa) {
         
         return repository.findByClassificacaoIndicativa(classificacaoIndicativa).stream()
@@ -72,6 +80,7 @@ public class FilmeServiceImpl implements FilmeService{
     }
 
     @Override
+    @Transactional
     public FilmeDTOResponse findById(Long id) {
         
         return FilmeDTOResponse.valueOf(repository.findById(id));
@@ -88,16 +97,16 @@ public class FilmeServiceImpl implements FilmeService{
     @Override
     @Transactional
     public void update(Long id,FilmeDTO dto) {
+        ConverterIdObjeto converterId = new ConverterIdObjeto();
         Filme filme = repository.findById(id);
         filme.setTitulo(dto.titulo());
         filme.setDuracao(dto.duracao());
         filme.setSinopse(dto.sinopse());
         filme.setClassificacaoIndicativa(dto.classificacaoIndicativa());
-        filme.setListaPremios(converterPS.convertToEntityAttribute(dto.premios()));
-        filme.setListaGeneros(converterGS.convertToEntityAttribute(dto.generos()));
-        filme.setListaAtores(dto.Atores().stream().map(a -> AtorDTO.fromDTO(a)).toList());
-        Idioma idioma_original = IdiomaDTO.fromDTO(dto.idioma_original());
-        filme.setIdioma_original(idioma_original);   
+        filme.setListaPremios(dto.idPremios().stream().map(i -> converterId.premioFromId(i)).toList());
+        filme.setListaGeneros(dto.idGeneros().stream().map(i-> converterId.generoFromId(i)).toList());
+        filme.setListaAtores(dto.idAtores().stream().map(i -> atorRepository.findById(i)).toList());
+        filme.setIdioma_original(idiomaRepository.findById(dto.idIdiomaOriginal()));   
         
     }
     
