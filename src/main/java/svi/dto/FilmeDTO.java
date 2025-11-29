@@ -11,7 +11,7 @@ public record FilmeDTO(String titulo,
                        String classificacaoIndicativa,
                        String premios,
                        String generos,
-                       List<AtorDTO> Atores,
-                       IdiomaDTO idioma_original) {
+                       List<Long> idAtores,
+                       Long idIdiomaOriginal) {
 
 }

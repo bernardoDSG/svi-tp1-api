@@ -56,7 +56,6 @@ class Ator {
 }
 
 class Sessao {
-    - ingressosEsgotado : Boolean
     - horarioInicio : DateTime
     - horarioFim : DateTime
     

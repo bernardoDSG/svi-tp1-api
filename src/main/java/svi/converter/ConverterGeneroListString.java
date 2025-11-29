@@ -8,6 +8,7 @@ import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 import svi.model.Genero;
 
+
 @Converter
 public class ConverterGeneroListString implements AttributeConverter<List<Genero>, String> {
 
@@ -32,5 +33,18 @@ public class ConverterGeneroListString implements AttributeConverter<List<Genero
                 .map(String::trim)
                 .map(Genero::fromNome)
                 .collect(Collectors.toList());
+    }
+
+    public String converterGeneroStringId (List<Genero> listaGeneros) {
+        if(listaGeneros == null) {
+             return null;    
+        }
+        else {
+            return 
+            listaGeneros.stream()
+            .map(g -> g.getId() + "-"+g.getNome())
+            .collect(Collectors.joining(SEPARADOR));
+        } 
+        
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 @Entity
 public class Sessao extends DefaultEntity {
 
-    private Boolean ingressosEsgotado;
+    
 
     private LocalDateTime horarioInicio;
 
@@ -30,14 +30,9 @@ public class Sessao extends DefaultEntity {
         inverseJoinColumns = @JoinColumn(name = "sala_id"))
     private List<Sala> salas;
 
-    // Getters e setters
-    public Boolean getIngressosEsgotado() {
-        return ingressosEsgotado;
-    }
+   
 
-    public void setIngressosEsgotado(Boolean ingressosEsgotado) {
-        this.ingressosEsgotado = ingressosEsgotado;
-    }
+   
 
     public LocalDateTime getHorarioInicio() {
         return horarioInicio;

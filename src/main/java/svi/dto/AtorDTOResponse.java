@@ -1,19 +1,22 @@
 package svi.dto;
 
-import java.util.List;
 
+
+import svi.converter.ConverterPremioString;
 import svi.model.Ator;
-import svi.model.Premio;
+
 
 public record AtorDTOResponse(
     Long id,
     String nome,
-    List<Premio> premios
+    String premios
 ) {
 
     public static AtorDTOResponse valueOf(Ator ator) {
+        ConverterPremioString converter = new ConverterPremioString();
+
         return new AtorDTOResponse(ator.getId()
         , ator.getNome()
-        , ator.getPremios());
+        , converter.convertToDatabaseColumn(ator.getPremios()));
     }
 }

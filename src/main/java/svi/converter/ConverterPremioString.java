@@ -37,5 +37,17 @@ public class ConverterPremioString implements AttributeConverter<List<Premio> , 
         }
        
     }
+    public String converterPremioStringId (List<Premio> listaPremios) {
+        if(listaPremios == null) {
+             return null;    
+        }
+        else {
+            return 
+            listaPremios.stream()
+            .map(p -> p.getId() + "-"+p.getNome())
+            .collect(Collectors.joining(SEPARADOR));
+        } 
+        
+    }
     
 }
