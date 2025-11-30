@@ -7,7 +7,8 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import svi.dto.SessaoDTO;
-import svi.model.Sessao;
+import svi.dto.SessaoDTOResponse;
+
 import svi.service.SessaoService;
 
 @Path("/sessoes")
@@ -19,19 +20,19 @@ public class SessaoResource {
     SessaoService service;
 
     @GET
-    public List<Sessao> listarTodos() {
+    public List<SessaoDTOResponse> listarTodos() {
         return service.findAll();
     }
 
     @GET
     @Path("/{id}")
-    public Sessao buscarPorId(@PathParam("id") Long id) {
+    public SessaoDTOResponse buscarPorId(@PathParam("id") Long id) {
         return service.findById(id);
     }
 
     @POST
     @Transactional
-    public Sessao criar(SessaoDTO dto) {
+    public SessaoDTOResponse criar(SessaoDTO dto) {
         return service.create(dto);
     }
 

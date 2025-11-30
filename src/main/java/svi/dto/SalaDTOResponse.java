@@ -7,7 +7,7 @@ import svi.model.Sala;
 public record SalaDTOResponse(
     Long id,
     String nome,
-    List<PoltronaDTOResponse> listaPoltrona
+    List<PoltronaDTOResponse> poltronas
 ) {
 public static SalaDTOResponse valueOf(Sala sala) {
     if(sala == null) {

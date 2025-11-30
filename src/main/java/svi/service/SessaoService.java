@@ -3,12 +3,13 @@ package svi.service;
 import java.util.List;
 
 import svi.dto.SessaoDTO;
-import svi.model.Sessao;
+import svi.dto.SessaoDTOResponse;
+
 
 public interface SessaoService {
-    List<Sessao> findAll();
-    Sessao findById(Long id);
-    Sessao create(SessaoDTO dto);
+    List<SessaoDTOResponse> findAll();
+    SessaoDTOResponse findById(Long id);
+    SessaoDTOResponse create(SessaoDTO dto);
     void update(Long id, SessaoDTO dto);
     void delete(Long id);
 }

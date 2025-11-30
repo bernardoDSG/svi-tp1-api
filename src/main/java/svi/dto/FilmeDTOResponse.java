@@ -13,9 +13,9 @@ public record FilmeDTOResponse(
     String duracao,
     String sinopse,
     String classificacaoIndicativa,
-    String Premios,
-    String Generos,
-    List<AtorDTOResponse> Atores,
+    String premios,
+    String generos,
+    List<AtorDTOResponse> atores,
     IdiomaDTOResponse idioma_original
 ) {
     public static FilmeDTOResponse valueOf(Filme filme) {

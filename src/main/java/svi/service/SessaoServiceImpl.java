@@ -7,6 +7,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import svi.dto.SessaoDTO;
+import svi.dto.SessaoDTOResponse;
 import svi.model.*;
 import svi.repository.*;
 
@@ -27,19 +28,19 @@ public class SessaoServiceImpl implements SessaoService {
 
     @Override
     @Transactional
-    public List<Sessao> findAll() {
-        return repository.listAll();
+    public List<SessaoDTOResponse> findAll() {
+        return repository.listAll().stream().map(s -> SessaoDTOResponse.valueOf(s)).toList();
     }
 
     @Override
     @Transactional
-    public Sessao findById(Long id) {
-        return repository.findById(id);
+    public SessaoDTOResponse findById(Long id) {
+        return SessaoDTOResponse.valueOf(repository.findById(id));
     }
 
     @Override
     @Transactional
-    public Sessao create(SessaoDTO dto) {
+    public SessaoDTOResponse create(SessaoDTO dto) {
         Sessao sessao = new Sessao();
         sessao.setHorarioInicio(dto.horarioInicio());
         sessao.setHorarioFim(dto.horarioFim());
@@ -53,7 +54,7 @@ public class SessaoServiceImpl implements SessaoService {
         sessao.setSalas(salas);
 
         repository.persist(sessao);
-        return sessao;
+        return SessaoDTOResponse.valueOf(sessao);
     }
 
     @Override

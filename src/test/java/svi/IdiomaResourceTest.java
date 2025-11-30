@@ -46,13 +46,13 @@ public class IdiomaResourceTest {
     void buscarPorNomeTest() {
         RestAssured.given()
                 .contentType(ContentType.JSON)
-                .queryParam("nome", "ingles")
+                .queryParam("nome", "Português do Brasil")
                 .when()
                     .get("/idiomas/buscar")
                 .then()
                     .statusCode(200)
-                    .body("[0].nome", is("ingles"))
-                    .body("[0].id", notNullValue());
+                    .body("[0].nome", is("Português do Brasil"))
+                    .body("[0].id", notNullValue()); 
     }
 
     @Test
