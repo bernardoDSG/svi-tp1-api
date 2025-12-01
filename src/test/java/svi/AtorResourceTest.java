@@ -3,6 +3,9 @@ package svi;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
 import static org.hamcrest.CoreMatchers.is;
@@ -14,6 +17,7 @@ import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import jakarta.inject.Inject;
+import svi.converter.ConverterIdObjeto;
 import svi.converter.ConverterPremioString;
 import svi.dto.AtorDTO;
 import svi.dto.AtorDTOResponse;
@@ -25,6 +29,7 @@ import svi.service.AtorService;
 @QuarkusTest
 public class AtorResourceTest {
     ConverterPremioString converter = new ConverterPremioString();
+    ConverterIdObjeto converterid = new ConverterIdObjeto();
     @Inject
     AtorService atorservice;
 
@@ -60,34 +65,41 @@ public class AtorResourceTest {
     }
 
     
-    /*
+    
     @Test
     void incluirTest() {
         
         
-        
-        AtorDTO dto = new AtorDTO("Christian Bale","Oscar,Globo de Ouro,British Academy Film Awards");  
+        List<Long> idsPremios = new ArrayList<>();
+        idsPremios.add(1l);
+        idsPremios.add(6l);
+        idsPremios.add(5l);
+
+        AtorDTO atorDTO = new AtorDTO("Dwayne Johnson",idsPremios);
         
         RestAssured.given()
                 .contentType(ContentType.JSON)
-                .body(dto)
+                .body(atorDTO)
                 .when()
                     .post("/atores")
                 .then()
                     .statusCode(201)
                     .body("id", CoreMatchers.notNullValue(),
-                                    "nome", CoreMatchers.is("Christian Bale"),
-                                    "premios",CoreMatchers.hasItems("Oscar","Globo de Ouro","British Academy Film Awards"));
+                                    "nome", CoreMatchers.is("Dwayne Johnson"),
+                                    "premios",CoreMatchers.is("Oscar,Globo de Ouro,British Academy Film Awards"));
         
     }  
     @Test
     void alterarTest() {
         
+        List<Long> idsPremios = new ArrayList<>();
+        idsPremios.add(1l);
+        idsPremios.add(6l);
         
-        AtorDTO dto = new AtorDTO("Robert Downey Jr","Oscar,British Academy Film Awards");
-        AtorDTOResponse response = atorservice.create(dto);
-        
-        AtorDTO dtoUpdate = new AtorDTO("Robert Downey Jr", "Oscar,Globo de Ouro");
+        AtorDTO atorDTO = new AtorDTO("Jason Statham",  idsPremios);
+        AtorDTOResponse response = atorservice.create(atorDTO);
+        List.of(2l,3l);
+        AtorDTO dtoUpdate = new AtorDTO("Murilo Benicio", List.of(2l,3l));
         RestAssured.given()
                 .contentType(ContentType.JSON)
                 .body(dtoUpdate)
@@ -97,8 +109,9 @@ public class AtorResourceTest {
                     .statusCode(204);
         
         response = atorservice.findById(response.id());
+
         assertEquals(dtoUpdate.nome(), response.nome());
-        assertEquals(dtoUpdate.premios(),response.premios());
+        assertEquals(converter.convertToDatabaseColumn(dtoUpdate.idPremios().stream().map(i ->converterid.premioFromId(i)).toList()),response.premios());
 
 
     }
@@ -106,9 +119,9 @@ public class AtorResourceTest {
     void apagarTest() {
         
         
-        AtorDTO dto = new AtorDTO("Cilian Murphy", "Oscar,Leão de Ouro(Festival de Veneza)");
+        AtorDTO atorDTO = new AtorDTO("Robert Deniro", List.of(5l,6l));
 
-        AtorDTOResponse response = atorservice.create(dto);
+        AtorDTOResponse response = atorservice.create(atorDTO);
 
         RestAssured.given()
                 .when()
@@ -119,7 +132,7 @@ public class AtorResourceTest {
         response = atorservice.findById(response.id());
 
         assertNull(response);
-    }*/
+    }
    
 
    

@@ -5,3 +5,7 @@
 -- insert into myentity (id, field) values(3, 'field-3');
 -- alter sequence myentity_seq restart with 4;
 insert into idioma(nome,sigla) values('Português do Brasil','pt-br');
+insert into ator(nome,premios) values('Brad Pitt','Oscar,Globo de Ouro');
+insert into sala(nome)values('Sala Refresh');
+insert into poltrona(nome,sala_id)values('R1',1);
+insert into poltrona(nome,sala_id)values('R2',1);
