@@ -9,3 +9,5 @@ insert into ator(nome,premios) values('Brad Pitt','Oscar,Globo de Ouro');
 insert into sala(nome)values('Sala Refresh');
 insert into poltrona(nome,sala_id)values('R1',1);
 insert into poltrona(nome,sala_id)values('R2',1);
+insert into filme(titulo,duracao,sinopse,classificacaoIndicativa,listaPremios,listaGeneros,idioma_id)values('Embrapa: Uma história de guerra','2h30min','conta a historia da empresa mais magnifica do brasil','Livre','Oscar,Globo De Ouro','Ação,Comédia',1);
+insert into filme_atores_principais(filme_id,ator_id) values(1,1);

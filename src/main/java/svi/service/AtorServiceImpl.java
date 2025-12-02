@@ -24,7 +24,7 @@ public class AtorServiceImpl implements AtorService{
        
         Ator ator = new Ator();
         ator.setNome(dto.nome());
-         ator.setPremios( dto.idPremios().stream().map(i ->converterId.premioFromId(i)).toList());
+        ator.setPremios( dto.idPremios().stream().map(i ->converterId.premioFromId(i)).toList());
 
         repository.persist(ator);
         return AtorDTOResponse.valueOf(ator);

@@ -37,7 +37,12 @@
     <version>5.7.0</version>
     <scope>test</scope>
 </dependency>
-
+<dependency>
+  <groupId>org.eclipse.jdt</groupId>
+  <artifactId>org.eclipse.jdt.annotation</artifactId>
+  <version>2.2.700</version>
+  <scope>compile</scope>
+</dependency>
 <!-- (Opcional) AssertJ para asserts mais legíveis -->
 <dependency>
     <groupId>org.assertj</groupId>
