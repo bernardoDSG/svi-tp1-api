@@ -8,7 +8,8 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import svi.dto.FilmeDTO;
 import svi.dto.FilmeDTOResponse;
-
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 import svi.service.FilmeService;
 
 @Path("/filmes")
@@ -38,14 +39,14 @@ public class FilmeResource {
 
     @GET
     @Path("/classificacao")
-    public List<FilmeDTOResponse> buscarPorClassificacao(@QueryParam("valor") String classificacao) {
+    public List<FilmeDTOResponse> buscarPorClassificacao(@QueryParam("classificacaoIndicativa") String classificacao) {
         return service.findByClassificacaoIndicativa(classificacao);
     }
 
     @POST
     @Transactional
-    public FilmeDTOResponse criar(FilmeDTO dto) {
-        return service.create(dto);
+    public Response criar(FilmeDTO dto) {
+        return Response.status(Status.CREATED).entity(service.create(dto)).build();
     }
 
     @PUT

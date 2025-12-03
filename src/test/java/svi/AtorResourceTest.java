@@ -91,14 +91,8 @@ public class AtorResourceTest {
     }  
     @Test
     void alterarTest() {
-        
-        List<Long> idsPremios = new ArrayList<>();
-        idsPremios.add(1l);
-        idsPremios.add(6l);
-        
-        AtorDTO atorDTO = new AtorDTO("Jason Statham",  idsPremios);
+        AtorDTO atorDTO = new AtorDTO("Jason Statham",  List.of(1l,2l));
         AtorDTOResponse response = atorservice.create(atorDTO);
-        List.of(2l,3l);
         AtorDTO dtoUpdate = new AtorDTO("Murilo Benicio", List.of(2l,3l));
         RestAssured.given()
                 .contentType(ContentType.JSON)
