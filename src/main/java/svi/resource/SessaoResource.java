@@ -8,7 +8,8 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import svi.dto.SessaoDTO;
 import svi.dto.SessaoDTOResponse;
-
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 import svi.service.SessaoService;
 
 @Path("/sessoes")
@@ -32,8 +33,8 @@ public class SessaoResource {
 
     @POST
     @Transactional
-    public SessaoDTOResponse criar(SessaoDTO dto) {
-        return service.create(dto);
+    public Response criar(SessaoDTO dto) {
+        return Response.status(Status.CREATED).entity(service.create(dto)).build();
     }
 
     @PUT

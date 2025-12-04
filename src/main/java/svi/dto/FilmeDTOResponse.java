@@ -21,7 +21,11 @@ public record FilmeDTOResponse(
     public static FilmeDTOResponse valueOf(Filme filme) {
         ConverterPremioString converterPS = new ConverterPremioString();
         ConverterGeneroListString converterGS = new ConverterGeneroListString();
-        return new FilmeDTOResponse(
+        if(filme == null) {
+            return null;
+        }
+        else {
+            return new FilmeDTOResponse(
             filme.getId(),
             filme.getTitulo(),
             filme.getDuracao(),
@@ -31,6 +35,8 @@ public record FilmeDTOResponse(
             converterGS.convertToDatabaseColumn(filme.getListaGeneros()),
             filme.getListaAtores().stream().map(a -> AtorDTOResponse.valueOf(a)).toList(),
             IdiomaDTOResponse.valueOf(filme.getIdioma_original()) );
+        }
+        
     }
 
 }

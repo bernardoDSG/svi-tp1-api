@@ -17,11 +17,17 @@ public record SessaoDTOResponse(
 
 {
     public static SessaoDTOResponse valueOf(Sessao sessao) {
-        return new SessaoDTOResponse(sessao.getId(),
+        if(sessao == null) {
+            return null;
+        }
+        else{
+            return new SessaoDTOResponse(sessao.getId(),
                                      FilmeDTOResponse.valueOf(sessao.getFilme()),
                                      IdiomaDTOResponse.valueOf(sessao.getIdioma()),
                                      sessao.getSalas().stream().map(s -> SalaDTOResponse.valueOf(s)).toList(),
                                      sessao.getHorarioInicio(),
-                                     sessao.getHorarioFim());    
+                                     sessao.getHorarioFim()); 
+        }
+           
     }
 }

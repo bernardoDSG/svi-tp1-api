@@ -13,10 +13,16 @@ public record AtorDTOResponse(
 ) {
 
     public static AtorDTOResponse valueOf(Ator ator) {
+        if(ator == null) {
+            return null;
+        }
+        else {
         ConverterPremioString converter = new ConverterPremioString();
 
         return new AtorDTOResponse(ator.getId()
         , ator.getNome()
         , converter.convertToDatabaseColumn(ator.getPremios()));
+        }
+        
     }
 }
